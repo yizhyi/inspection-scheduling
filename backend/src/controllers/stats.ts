@@ -3,7 +3,7 @@ import pool from '../models/database';
 
 export const getCostStats = async (req: Request, res: Response) => {
   try {
-    const result = await pool.query(`
+    const [result] = await pool.query(`
       SELECT 
         s.id,
         s.week_start,
@@ -19,7 +19,7 @@ export const getCostStats = async (req: Request, res: Response) => {
       LIMIT 10
     `);
     
-    const inspectorWorkload = await pool.query(`
+    const [inspectorWorkload] = await pool.query(`
       SELECT 
         i.id,
         i.name,
@@ -34,8 +34,8 @@ export const getCostStats = async (req: Request, res: Response) => {
     `);
     
     res.json({
-      scheduleHistory: result.rows,
-      inspectorWorkload: inspectorWorkload.rows
+      scheduleHistory: result,
+      inspectorWorkload
     });
   } catch (error) {
     res.status(500).json({ error: '获取成本统计失败' });
