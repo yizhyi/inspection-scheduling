@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 const config: Config = {
   plugins: [react()],
   server: {
+    host: '0.0.0.0',
     port: 3000,
     proxy: {
       '/api': {
